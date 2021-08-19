@@ -1,0 +1,54 @@
+plugins {
+	id 'org.springframework.boot' version '2.5.3'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+    id "io.freefair.lombok" version "6.1.0-m3"
+}
+
+group = 'ish.securit'
+version = '0.0.1-BETA'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+java {
+    // Updated to the latest support version of the JVM. Doing this allows us to take advantage of the
+    // latest features while maitianing a good support base for the application. Also by controlling
+    // the jvm version here we can ensure the environments is consistent across different machines.
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(11)
+        vendor = JvmVendorSpec.ADOPTOPENJDK
+    }
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// Entity Validation
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // Database dependencies
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.liquibase:liquibase-core'
+    runtimeOnly 'com.h2database:h2'
+
+	// Convenience Dependencies
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+	// Testing Dependencies
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+test {
+	useJUnitPlatform()
+}
