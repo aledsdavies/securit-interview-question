@@ -5,27 +5,23 @@ import lombok.Getter;
 import lombok.extern.jackson.Jacksonized;
 import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 @Builder
 @Jacksonized
-@Table(name = "safebox")
 @Getter
-public class Safebox {
+@Table(name = "safebox_contents")
+public class SafeboxContentsUpdateRequest{
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
-    @NotNull
-    @NotEmpty
-    private String name;
+    @Column(name = "safebox_id")
+    String safeboxId;
 
-    @NotNull
-    private String password;
+    String contents;
 }
-
