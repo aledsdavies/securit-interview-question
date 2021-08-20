@@ -12,12 +12,14 @@ import java.nio.charset.StandardCharsets;
 
 @Service
 public class EncryptionServiceImpl implements EncryptionService {
+    private final String initVector;
+    private final String key;
 
-    @Value("${encryption.initVector}")
-    private String initVector;
 
-    @Value("${encryption.key}")
-    private String key;
+    public EncryptionServiceImpl(@Value("${encryption.initVector}") String initVector, @Value("${encryption.key}") String key) {
+        this.initVector = initVector;
+        this.key = key;
+    }
 
     @Override
     public String encrypt(String contents) {
