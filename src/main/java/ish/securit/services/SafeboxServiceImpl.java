@@ -8,6 +8,7 @@ import ish.securit.repositories.SafeboxRepository;
 import ish.securit.services.interfaces.SafeboxService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -19,6 +20,7 @@ import java.util.List;
 public class SafeboxServiceImpl implements SafeboxService {
     private final SafeboxRepository safeboxRepository;
     private final SafeboxContentsRepository safeboxContentsRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public boolean exists(String id) {
@@ -38,6 +40,9 @@ public class SafeboxServiceImpl implements SafeboxService {
     @Override
     @Transactional
     public String createSafebox(Safebox safebox) {
+        // We Encode the password before storing it in the database for security.
+        safebox.setPassword(passwordEncoder.encode(safebox.getPassword()));
+
         return safeboxRepository.save(safebox).getId();
     }
 
