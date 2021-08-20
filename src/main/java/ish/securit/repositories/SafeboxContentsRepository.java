@@ -1,10 +1,15 @@
 package ish.securit.repositories;
 
-import ish.securit.models.Safebox;
+import ish.securit.dtos.SafeboxContent;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-@Repository
-interface SafeboxContentsRepository extends JpaRepository<Safebox, String> {
+import java.util.Optional;
 
+@Repository
+public interface SafeboxContentsRepository extends JpaRepository<SafeboxContent, String> {
+
+    @Query("SELECT c FROM safebox_contents c WHERE c.safebox_id = ?1")
+    Optional<SafeboxContent> getContentsBySafeboxId(String id);
 }

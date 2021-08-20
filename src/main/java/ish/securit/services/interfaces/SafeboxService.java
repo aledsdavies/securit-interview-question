@@ -1,15 +1,17 @@
 package ish.securit.services.interfaces;
 
-import ish.securit.models.Safebox;
-import ish.securit.models.SafeboxContents;
-import ish.securit.models.SafeboxCreateResponse;
+import ish.securit.dtos.Safebox;
+import ish.securit.dtos.SafeboxContent;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public interface SafeboxService {
-    SafeboxContents getSafeboxContents(String id);
+    Optional<SafeboxContent> getSafeboxContents(String id);
 
-    SafeboxCreateResponse createSafebox(Safebox safebox);
+    String createSafebox(Safebox safebox);
 
-    void updateSafeboxContents(String id, SafeboxContents contents);
+    void updateSafeboxContents(List<SafeboxContent> contents);
 }

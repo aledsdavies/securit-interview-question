@@ -1,7 +1,7 @@
-package ish.securit.models;
+package ish.securit.dtos;
 
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -12,16 +12,15 @@ import javax.persistence.Table;
 
 @Builder
 @Jacksonized
-@Getter
+@Value
 @Table(name = "safebox_contents")
-public class SafeboxContentsUpdateRequest{
+public class SafeboxContent {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id;
+    String id;
 
     @Column(name = "safebox_id")
     String safeboxId;
-
     String contents;
 }
