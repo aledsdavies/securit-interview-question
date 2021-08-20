@@ -2,6 +2,7 @@ package ish.securit.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ish.securit.services.interfaces.SafeboxService;
+import ish.securit.utils.SecurityHelper;
 import org.hamcrest.core.Is;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc()
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(SafeboxApiController.class)
-class SafeboxApiControllerCreateSafeboxTest {
+class SafeboxApiControllerCreateSafeboxTest extends SecurityHelper {
     @Autowired
     private MockMvc mockMvc;
 
