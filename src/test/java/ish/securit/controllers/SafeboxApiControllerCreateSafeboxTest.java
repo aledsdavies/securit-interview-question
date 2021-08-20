@@ -60,7 +60,7 @@ class SafeboxApiControllerCreateSafeboxTest {
     }
 
     @Test
-    @DisplayName("Malformed expected data")
+    @DisplayName("Malformed expected data when Safebox password is null")
     public void shouldReturnMalformedExceptionWhenSafeboxPasswordIsNull() throws Exception {
         // Given
         var request = objectMapper.writeValueAsString(new ish.securit.openapi.model.InlineObject()
@@ -78,7 +78,7 @@ class SafeboxApiControllerCreateSafeboxTest {
     }
 
     @Test
-    @DisplayName("Malformed expected data")
+    @DisplayName("Malformed expected data when Safebox name is null")
     public void shouldReturnMalformedExceptionWhenSafeboxNameIsNull() throws Exception {
         // Given
         var request = new ish.securit.openapi.model.InlineObject()
@@ -118,7 +118,7 @@ class SafeboxApiControllerCreateSafeboxTest {
     }
 
     @Test
-    @DisplayName("Safebox correctly created")
+    @DisplayName("Safebox contents correctly retrieved")
     public void shouldReturnSafeboxIDWithValidObject() throws Exception {
         // Given
         var createdId = UUID.randomUUID().toString();

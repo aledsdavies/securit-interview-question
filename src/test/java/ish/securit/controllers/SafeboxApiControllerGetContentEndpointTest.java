@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc()
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(SafeboxApiController.class)
-class SafeboxApiControllerGetContentsEndpointTest {
+class SafeboxApiControllerGetContentEndpointTest {
     @Autowired
     private MockMvc mockMvc;
 

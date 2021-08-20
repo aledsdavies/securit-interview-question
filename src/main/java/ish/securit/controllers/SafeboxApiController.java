@@ -28,11 +28,7 @@ public class SafeboxApiController implements SafeboxApi {
     @Override
     public ResponseEntity<InlineResponse2001> safeboxIdItemsGet(String id) throws Exception {
         checkIdIsValid(id);
-
-        if (!safeboxService.exists(id)) {
-            // This is the 404 error case
-            throw new NotFoundException("Requested safebox does not exist");
-        }
+        checkSafeboxExists(id);
 
         var contents = this.safeboxService.getSafeboxContents(id);
 
@@ -57,13 +53,25 @@ public class SafeboxApiController implements SafeboxApi {
     @Override
     public ResponseEntity<Void> safeboxIdItemsPut(String id, InlineObject1 inlineObject1) throws Exception {
         checkIdIsValid(id);
-        return SafeboxApi.super.safeboxIdItemsPut(id, inlineObject1);
+        checkSafeboxExists(id);
+
+        this.safeboxService.updateSafeboxContents(mapInlineObject1ToListOfSafeboxContent(inlineObject1));
+
+        return ResponseEntity.ok().build();
     }
+
 
     private InlineResponse2001 mapSafeboxContentToInlineResponse2001(List<SafeboxContent> content) {
         return new InlineResponse2001().items(
                 content.stream().map(SafeboxContent::getContents).collect(Collectors.toList())
         );
+    }
+
+    private List<SafeboxContent> mapInlineObject1ToListOfSafeboxContent(ish.securit.openapi.model.InlineObject1 inlineObject1) {
+        return inlineObject1.getItems()
+                .stream()
+                .map(c -> SafeboxContent.builder().contents(c).build())
+                .collect(Collectors.toList());
     }
 
     private void checkIdIsValid(String id) throws MalformedIdException {
@@ -74,9 +82,18 @@ public class SafeboxApiController implements SafeboxApi {
         }
 
         try {
+            // This will error on any invalid UUID format allowing us a convenient way to test whether the ID is formatted correctly
             UUID.fromString(id);
         } catch (Exception ex) {
             throw err;
         }
     }
+
+    private void checkSafeboxExists(String id) throws NotFoundException {
+        if (!safeboxService.exists(id)) {
+            // This is the 404 error case
+            throw new NotFoundException("Requested safebox does not exist");
+        }
+    }
+
 }
