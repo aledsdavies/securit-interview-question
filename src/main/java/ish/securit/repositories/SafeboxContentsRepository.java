@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface SafeboxContentsRepository extends JpaRepository<SafeboxContent, String> {
     List<SafeboxContent> getContentsBySafeboxId(String id);
+
+    boolean existsBySafeboxIdAndContent(String safeboxId, String content);
 }
