@@ -10,6 +10,7 @@ import ish.securit.openapi.model.InlineObject;
 import ish.securit.openapi.model.InlineObject1;
 import ish.securit.openapi.model.InlineResponse200;
 import ish.securit.openapi.model.InlineResponse2001;
+import ish.securit.services.interfaces.PasswordStrengthService;
 import ish.securit.services.interfaces.SafeboxService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class SafeboxApiController implements SafeboxApi {
     private final SafeboxService safeboxService;
+    private final PasswordStrengthService passwordStrengthService;
 
     @Override
     public ResponseEntity<InlineResponse2001> safeboxIdItemsGet(String id) throws Exception {
@@ -41,6 +43,11 @@ public class SafeboxApiController implements SafeboxApi {
         if (safeboxService.checkIfNameExists(inlineObject.getName())) {
             throw new SafeboxExistsException("Safebox already exists");
         }
+
+        /*
+            Check the password strength to ensure it is strong enough
+         */
+        passwordStrengthService.checkPasswordIsStrong(inlineObject.getPassword());
 
         var id = this.safeboxService.createSafebox(Safebox.builder()
                 .name(inlineObject.getName())

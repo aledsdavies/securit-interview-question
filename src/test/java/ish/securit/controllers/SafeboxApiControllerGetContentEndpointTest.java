@@ -1,6 +1,7 @@
 package ish.securit.controllers;
 
 import ish.securit.dtos.SafeboxContent;
+import ish.securit.services.interfaces.PasswordStrengthService;
 import ish.securit.services.interfaces.SafeboxService;
 import ish.securit.utils.SecurityHelper;
 import org.hamcrest.core.Is;
@@ -41,6 +42,10 @@ class SafeboxApiControllerGetContentEndpointTest extends SecurityHelper {
 
     @MockBean
     private SafeboxService safeboxService;
+
+    @MockBean
+    private PasswordStrengthService passwordStrengthService;
+
 
     @BeforeEach
     public void setup() {

@@ -1,6 +1,7 @@
 package ish.securit.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import ish.securit.services.interfaces.PasswordStrengthService;
 import ish.securit.services.interfaces.SafeboxService;
 import ish.securit.utils.SecurityHelper;
 import org.hamcrest.core.Is;
@@ -38,6 +39,9 @@ class SafeboxApiControllerCreateSafeboxTest extends SecurityHelper {
 
     @MockBean
     private SafeboxService safeboxService;
+
+    @MockBean
+    private PasswordStrengthService passwordStrengthService;
 
     @Test
     @DisplayName("Safebox already exists")

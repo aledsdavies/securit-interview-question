@@ -1,10 +1,10 @@
 package ish.securit.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import ish.securit.services.interfaces.PasswordStrengthService;
 import ish.securit.services.interfaces.SafeboxService;
 import ish.securit.utils.SecurityHelper;
 import org.hamcrest.core.Is;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,15 +13,11 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-import javax.annotation.PostConstruct;
-import java.util.ArrayList;
 import java.util.UUID;
 
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
@@ -43,6 +39,10 @@ class SafeboxApiControllerUpdateContentEndpointTest extends SecurityHelper {
 
     @MockBean
     private SafeboxService safeboxService;
+
+    @MockBean
+    private PasswordStrengthService passwordStrengthService;
+
 
     @Test
     @DisplayName("Specified Basic Auth does not match")
