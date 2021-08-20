@@ -9,7 +9,5 @@ import java.util.List;
 
 @Repository
 public interface SafeboxContentsRepository extends JpaRepository<SafeboxContent, String> {
-
-    @Query("SELECT c FROM SafeboxContent c WHERE c.safeboxId = ?1")
     List<SafeboxContent> getContentsBySafeboxId(String id);
 }

@@ -14,7 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Builder
+@Builder(toBuilder = true)
 @Jacksonized
 @AllArgsConstructor
 @NoArgsConstructor
@@ -30,5 +30,5 @@ public class SafeboxContent {
 
     @Column(name = "safebox_id")
     private String safeboxId;
-    private String contents;
+    private String content;
 }

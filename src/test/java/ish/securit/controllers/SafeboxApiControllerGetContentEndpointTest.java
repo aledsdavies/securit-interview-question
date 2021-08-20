@@ -5,7 +5,6 @@ import ish.securit.services.interfaces.PasswordStrengthService;
 import ish.securit.services.interfaces.SafeboxService;
 import ish.securit.utils.SecurityHelper;
 import org.hamcrest.core.Is;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,7 +18,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -122,9 +120,9 @@ class SafeboxApiControllerGetContentEndpointTest extends SecurityHelper {
         // Given
         var id = UUID.randomUUID().toString();
         var response = List.of(
-                SafeboxContent.builder().contents("Safebox content 03").build(),
-                SafeboxContent.builder().contents("Safebox content 02").build(),
-                SafeboxContent.builder().contents("Safebox content 01").build()
+                SafeboxContent.builder().content("Safebox content 03").build(),
+                SafeboxContent.builder().content("Safebox content 02").build(),
+                SafeboxContent.builder().content("Safebox content 01").build()
         );
 
         // When

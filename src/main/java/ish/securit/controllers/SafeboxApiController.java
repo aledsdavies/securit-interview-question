@@ -62,7 +62,7 @@ public class SafeboxApiController implements SafeboxApi {
         checkIdIsValid(id);
         checkSafeboxExists(id);
 
-        this.safeboxService.updateSafeboxContents(mapInlineObject1ToListOfSafeboxContent(inlineObject1));
+        this.safeboxService.updateSafeboxContents(mapInlineObject1ToListOfSafeboxContent(id, inlineObject1));
 
         return ResponseEntity.ok().build();
     }
@@ -70,14 +70,17 @@ public class SafeboxApiController implements SafeboxApi {
 
     private InlineResponse2001 mapSafeboxContentToInlineResponse2001(List<SafeboxContent> content) {
         return new InlineResponse2001().items(
-                content.stream().map(SafeboxContent::getContents).collect(Collectors.toList())
+                content.stream().map(SafeboxContent::getContent).collect(Collectors.toList())
         );
     }
 
-    private List<SafeboxContent> mapInlineObject1ToListOfSafeboxContent(ish.securit.openapi.model.InlineObject1 inlineObject1) {
+    private List<SafeboxContent> mapInlineObject1ToListOfSafeboxContent(String safeboxId, InlineObject1 inlineObject1) {
         return inlineObject1.getItems()
                 .stream()
-                .map(c -> SafeboxContent.builder().contents(c).build())
+                .map(c -> SafeboxContent.builder()
+                        .safeboxId(safeboxId)
+                        .content(c)
+                        .build())
                 .collect(Collectors.toList());
     }
 
