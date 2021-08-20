@@ -5,11 +5,12 @@ import ish.securit.dtos.SafeboxContent;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public interface SafeboxService {
-    Optional<SafeboxContent> getSafeboxContents(String id);
+    boolean exists(String id);
+
+    List<SafeboxContent> getSafeboxContents(String id);
 
     String createSafebox(Safebox safebox);
 

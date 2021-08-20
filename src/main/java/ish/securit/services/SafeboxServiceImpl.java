@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +21,12 @@ public class SafeboxServiceImpl implements SafeboxService {
     private final SafeboxContentsRepository safeboxContentsRepository;
 
     @Override
-    public Optional<SafeboxContent> getSafeboxContents(String id) {
+    public boolean exists(String id) {
+        return safeboxRepository.existsById(id);
+    }
+
+    @Override
+    public List<SafeboxContent> getSafeboxContents(String id) {
         return safeboxContentsRepository.getContentsBySafeboxId(id);
     }
 
