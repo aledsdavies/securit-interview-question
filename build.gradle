@@ -2,8 +2,8 @@ plugins {
 	id 'org.springframework.boot' version '2.5.3'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
-    id "io.freefair.lombok" version "6.1.0-m3"
-    id "org.openapi.generator" version "5.2.1"
+  id "io.freefair.lombok" version "6.1.0-m3"
+  id "org.openapi.generator" version "5.2.1"
 }
 
 group = 'ish.securit'
@@ -68,14 +68,14 @@ test {
 */
 
 openApiValidate {
-   inputSpec = "$rootDir/specs/beta.api.swagger.yml".toString()
+   inputSpec = "$rootDir/beta.api.swagger.yaml".toString()
    recommend = true
 }
 
 openApiGenerate {
     generatorName = "spring"
-    inputSpec = "$rootDir/specs/beta.api.swagger.yml".toString()
-    outputDir = "$buildDir/generated/openai".toString()
+    inputSpec = "$rootDir/beta.api.swagger.yaml".toString()
+    outputDir = "$buildDir/generated/openapi".toString()
     apiPackage = "ish.securit.openapi.api"
     invokerPackage = "ish.securit.openapi.invoker"
     modelPackage = "ish.securit.openapi.model"
@@ -94,6 +94,9 @@ compileJava.dependsOn tasks.openApiValidate, tasks.openApiGenerate
 */
 sourceSets {
   main {
-    java.srcDirs += "$buildDir/generated/openai"
+    java.srcDirs += "$buildDir/generated/openapi"
+  }
+  test {
+    java.srcDirs += "$buildDir/generated/openapi"
   }
 }

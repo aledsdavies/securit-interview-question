@@ -9,7 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Builder
+@Builder(toBuilder = true)
 @Jacksonized
 @Table(name = "safebox")
 @Value

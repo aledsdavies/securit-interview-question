@@ -39,8 +39,9 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                     );
                 }))
                 .csrf().disable()
-                // Lock Down All urls
                 .authorizeRequests()
+                .antMatchers("/safebox").permitAll()
+                // Secure all URL's not in the antMatchers above
                 .anyRequest().authenticated()
 
                 // Use Http Basic as the Authentication method

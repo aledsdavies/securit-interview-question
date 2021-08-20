@@ -26,6 +26,11 @@ public class SafeboxServiceImpl implements SafeboxService {
     }
 
     @Override
+    public boolean checkIfNameExists(String name) {
+        return safeboxRepository.existsByName(name);
+    }
+
+    @Override
     public List<SafeboxContent> getSafeboxContents(String id) {
         return safeboxContentsRepository.getContentsBySafeboxId(id);
     }

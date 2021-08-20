@@ -17,7 +17,6 @@ paths:
         content:
           application/json:
             schema:
-              title: SafeboxCreateRequest
               type: object
               properties:
                 name:
@@ -38,7 +37,6 @@ paths:
           content:
             application/json:
               schema:
-                title: SafeboxCreateResponse
                 type: object
                 properties:
                   id:
@@ -75,7 +73,6 @@ paths:
           content:
             application/json:
               schema:
-                title: SafeboxContentsResponse
                 type: object
                 properties:
                   items:
@@ -117,7 +114,6 @@ paths:
         content:
           application/json:
             schema:
-              title: SafeboxContentsRequest
               type: object
               properties:
                 items:

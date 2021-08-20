@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc()
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(SafeboxApiController.class)
-class SafeboxApiControllerTest {
+class SafeboxApiControllerGetContentsEndpointTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -47,6 +47,7 @@ class SafeboxApiControllerTest {
 
         // Expect
         mockMvc.perform(get("/safebox/" + id + "/items"))
+                .andDo(print())
                 .andExpect(status().is(401))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.message", Is.is("Specified Basic Auth does not match")));
@@ -63,6 +64,7 @@ class SafeboxApiControllerTest {
 
         // Expect
         mockMvc.perform(get("/safebox/" + id + "/items").with(httpBasic(NAME, PASSWORD)))
+                .andDo(print())
                 .andExpect(status().is(404))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.message", Is.is("Requested safebox does not exist")));
@@ -74,10 +76,9 @@ class SafeboxApiControllerTest {
         // Given
         var id = "1234abc";
 
-        // when
-
         // Expect
         mockMvc.perform(get("/safebox/" + id + "/items").with(httpBasic(NAME, PASSWORD)))
+                .andDo(print())
                 .andExpect(status().is(422))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.message", Is.is("Malformed expected data")));
@@ -90,10 +91,11 @@ class SafeboxApiControllerTest {
         var id = UUID.randomUUID().toString();
 
         // when
-        when(safeboxService.exists(id)).thenThrow(new RuntimeException("General Server Error For Testing"));
+        when(safeboxService.exists(id)).thenThrow();
 
         // Expect
         mockMvc.perform(get("/safebox/" + id + "/items").with(httpBasic(NAME, PASSWORD)))
+                .andDo(print())
                 .andExpect(status().is(500))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.message", Is.is("Unexpected API error")));
@@ -109,8 +111,6 @@ class SafeboxApiControllerTest {
                 SafeboxContent.builder().contents("Safebox content 02").build(),
                 SafeboxContent.builder().contents("Safebox content 01").build()
         );
-
-        // Safebox Credentials
 
         // When
         when(safeboxService.exists(id)).thenReturn(true);

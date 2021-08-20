@@ -15,4 +15,6 @@ public interface SafeboxService {
     String createSafebox(Safebox safebox);
 
     void updateSafeboxContents(List<SafeboxContent> contents);
+
+    boolean checkIfNameExists(String name);
 }

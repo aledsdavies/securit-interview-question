@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SafeboxRepository extends JpaRepository<Safebox, String> {
+    boolean existsByName(String name);
 }
